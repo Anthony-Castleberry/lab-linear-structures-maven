@@ -158,7 +158,12 @@ class ArrayBasedQueueIterator<T> implements Iterator<T> {
   } // hasNext()
 
   @Override
-  public void remove() throws UnsupportedOperationException {
-    throw new UnsupportedOperationException();
+  public void remove() throws IllegalStateException {
+    try {
+      this.abq.dequeue();
+      this.i++;
+    } catch (Exception e) {
+      throw new IllegalStateException("Can't remove from an empty queue");
+    }
   } // remove()
 } // ArrayBasedQueueIterator<T>
